@@ -33,7 +33,7 @@ if (!(Test-Path -Path $HomeOpenVpn))
     msiexec.exe /i $HomeOpenVpnExecutable /quiet
 }
 $HomeOpenVpnConfig = "C:\Program Files\OpenVPN\config\DublinOpenVpn.ovpn"
-$URL = "https://payrocllc-my.sharepoint.com/personal/fabio_medeiro_payroc_com/_layouts/15/download.aspx?SourceUrl=%2Fpersonal%2Ffabio%5Fmedeiro%5Fpayroc%5Fcom%2FDocuments%2FDeployment%20HM%2FDublin%5FOpenVPN%2Eovpn"
+$URL = "https://raw.githubusercontent.com/fabioamedeiro/HmDeploymentWindows/main/Dublin_OpenVPN.ovpn"
 
 if (!([System.IO.File]::Exists($HomeOpenVpnConfig )))
 {
