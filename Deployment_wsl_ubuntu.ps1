@@ -37,7 +37,7 @@ $URL = "https://raw.githubusercontent.com/fabioamedeiro/HmDeploymentWindows/main
 
 if (!([System.IO.File]::Exists($HomeOpenVpnConfig )))
 {
-    echo "Downloading OpenVPN"
+    echo "Downloading OpenVPN Config file"
     Invoke-WebRequest -Uri $URL -OutFile $HomeOpenVpnConfig
 }
 
