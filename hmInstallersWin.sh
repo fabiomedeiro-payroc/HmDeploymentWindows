@@ -23,6 +23,15 @@ if_dir_exist()
     $COMMAND $DIR
   fi
 }
+
+echo "Downloading the Git and SVN readOnly Key"
+wget https://github.com/fabioamedeiro/HmDeploymentWindows/raw/main/svn_readonly.zip -O $HOME/svn_readonly.zip  > /dev/null 2>&1
+check_command
+
+echo "Unziping the Git and SVN readOnly Key "
+unzip $HOME/svn_readonly.zip
+check_command 
+
 echo "Creating .ssh Folder"
 mkdir $HOME/.ssh
 
