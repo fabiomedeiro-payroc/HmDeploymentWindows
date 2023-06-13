@@ -5,7 +5,7 @@ $URL = "https://download.virtualbox.org/virtualbox/6.1.44/VirtualBox-6.1.44-1568
 $HomeVirtualboxExecutable = "$HOME\Downloads\VirtualBox-6.1.44-156814-Win.exe"
 $HomeVirtualbox = "C:\Program Files\Oracle\VirtualBox"
 $HomeOpenVpnExecutable = "$HOME\Downloads\OpenVPN-2.6.4-I001-amd64.msi"
-$HomeOpenVpn = "C:\Program Files\Oracle\OpenVpn"
+$HomeOpenVpn = "C:\Program Files\OpenVpn"
 if (!([System.IO.File]::Exists($HomeVirtualboxExecutable )))
 {
     echo "Downloading VirtualBox 6.1.44"
