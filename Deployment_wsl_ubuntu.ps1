@@ -64,7 +64,7 @@ echo "WSL updating"
 wsl --update
 
 echo "Set WSL 1 as your default version"
-wsl --set-default-version
+wsl --set-default-version 1
 
 echo "Install WSL command"
 
