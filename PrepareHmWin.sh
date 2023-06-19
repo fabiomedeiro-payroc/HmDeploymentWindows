@@ -65,7 +65,7 @@ sudo apt-get install maven -y > /dev/null 2>&1
 check_command
 
 echo "Setting metadata on WSL"
-sudo -- sh -c 'printf "[automount]\noptions = "metadata"" > /etc/wsl.conf'
+sudo sh -c 'printf "[automount]\noptions = "metadata"\n[network]\ngenerateResolvConf = false " > /etc/wsl.conf'
 
 echo "Setting JAVA "
 sh -c 'grep -ri JAVA_HOME $HOME/.bashrc > /dev/null 2>1 ; if [ $? -eq 1 ]; then printf "JAVA_HOME=$HOME/custom_java/jdk8\nJRE_HOME=$HOME/custom_java/jdk8/jre\nPATH=\"$HOME/custom_java/jdk8/bin:$PATH:/mnt/c/Program Files/Oracle/VirtualBox\"" >> $HOME/.bashrc; fi'
@@ -77,3 +77,14 @@ check_command
 
 echo "Activating Java and virtualbox settings"
 source $HOME/.bashrc
+
+echo "Downloading NVM"
+wget -P $HOME https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh ; bash $HOME/install.sh; source $HOME/.nvm/nvm.sh
+
+echo "Installing Node"
+nvm install --lts
+check_command
+
+echo "Installing WN CLI"
+npm install --global worldnet-cli
+check_command
