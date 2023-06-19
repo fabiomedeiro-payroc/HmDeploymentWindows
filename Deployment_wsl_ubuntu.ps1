@@ -4,8 +4,10 @@ New-Alias ^D ex
 $URL = "https://download.virtualbox.org/virtualbox/6.1.44/VirtualBox-6.1.44-156814-Win.exe"
 $HomeVirtualboxExecutable = "$HOME\Downloads\VirtualBox-6.1.44-156814-Win.exe"
 $HomeVirtualbox = "C:\Program Files\Oracle\VirtualBox"
-$HomeOpenVpnExecutable = "$HOME\Downloads\OpenVPN-2.6.4-I001-amd64.msi"
-$HomeOpenVpn = "C:\Program Files\OpenVpn"
+$HomeOpenVpnExecutable = "$HOME\Downloads\openvpn-connect-3.3.7.2979_signed.msi"
+$HomeOpenVpn = "C:\Program Files\OpenVpn Connect"
+$OpenVpnConfig = "$HOME\Downloads\DublinOpenVpn.ovpn"
+
 if (!([System.IO.File]::Exists($HomeVirtualboxExecutable )))
 {
     echo "Downloading VirtualBox 6.1.44"
@@ -18,7 +20,7 @@ if (!(Test-Path -Path $HomeVirtualbox))
     start-process ($HomeVirtualboxExecutable)  --silent
 }
 
-$URL = "https://swupdate.openvpn.org/community/releases/OpenVPN-2.6.4-I001-amd64.msi"
+$URL = "https://swupdate.openvpn.net/downloads/connect/openvpn-connect-3.3.7.2979_signed.msi"
 
 if (!([System.IO.File]::Exists($HomeOpenVpnExecutable )))
 {
@@ -32,13 +34,17 @@ if (!(Test-Path -Path $HomeOpenVpn))
     echo "Installing OpenVPN"
     msiexec.exe /i $HomeOpenVpnExecutable /quiet
 }
-$HomeOpenVpnConfig = "C:\Program Files\OpenVPN\config\DublinOpenVpn.ovpn"
+
 $URL = "https://raw.githubusercontent.com/fabioamedeiro/HmDeploymentWindows/main/Dublin_OpenVPN.ovpn"
 
-if (!([System.IO.File]::Exists($HomeOpenVpnConfig )))
+if (!([System.IO.File]::Exists($OpenVpnConfig )))
 {
-    echo "Downloading OpenVPN Config file"
-    Invoke-WebRequest -Uri $URL -OutFile $HomeOpenVpnConfig
+    echo "Downloading OpenVPN Config"
+    Invoke-WebRequest -Uri $URL -OutFile $OpenVpnConfig
+
+
+    echo "Importing OpenVPN Config"
+    & C:\"Program Files"\"OpenVpn Connect"\OpenVPNConnect.exe  --accept-gdpr --skip-startup-dialogs --import-profile=$OpenVpnConfig
 }
 
 if(!((Get-WindowsOptionalFeature -FeatureName Microsoft-Windows-Subsystem-Linux -Online).State -eq "Enabled"))
@@ -69,4 +75,3 @@ wsl --set-default-version 1
 echo "Install WSL command"
 
 wsl --install -d Ubuntu-22.04
-
