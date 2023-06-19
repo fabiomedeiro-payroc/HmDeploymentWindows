@@ -24,12 +24,16 @@ if_dir_exist()
   fi
 }
 
+echo "Setting Google DNS to resolv.conf "
+sudo sh -c 'printf "nameserver 8.8.8.8" > /etc/resolv.conf'
+check_command
+
 echo "Downloading the Git and SVN readOnly Key"
 wget https://github.com/fabioamedeiro/HmDeploymentWindows/raw/main/svn_readonly.zip -O $HOME/svn_readonly.zip  > /dev/null 2>&1
 check_command
 
 echo "Unziping the Git and SVN readOnly Key "
-unzip $HOME/svn_readonly.zip
+unzip $HOME/svn_readonly.zip -d $HOME
 check_command 
 
 echo "Creating .ssh Folder"
@@ -69,11 +73,11 @@ echo "Activating Python Virtual Environment"
 source  .venv/bin/activate >/dev/null 2>&1
 
 echo "Deploying requirements.txt on Python Virtual Environment"
-pip install -r requirements.txt
+pip install -r requirements.txt >/dev/null 2>&1
 check_command
 
 echo "Deploying requirements.yml on Python Virtual Environment"
-ansible-galaxy install -r requirements.yml # >/dev/null 2>&1
+ansible-galaxy install -r requirements.yml  >/dev/null 2>&1
 check_command
 
 echo "Making sure vagrant environment is loaded"
@@ -93,7 +97,7 @@ printf "build_maven_username: 'wntest'\nbuild_maven_password: 'worldPass1'" > in
 check_command
 
 echo "Making sure acl, python3-pexpect and patch are installed"
-ansible all:!localhost -m shell -b -a "apt-get update; apt-get install acl python3-pexpect patch"
+ansible 'all:!localhost' -m shell -b -a "apt-get update; apt-get install acl python3-pexpect patch"
 check_command
 
 echo "Ping all vms "
@@ -110,15 +114,11 @@ echo "Define what branch will be deployed on payroc/workspace/host-management/in
 printf "nettraxion_debug: True\n# Branch to deploy\nbuild_nettraxion_version: "$NVERSION"\n# Workspace directory# Dont forget to replace <user> with your username.\nbuild_nettraxion_source_dir: "$PWD/../nettraxion"\nnettraxion_sources_dir: %s\"{{ build_nettraxion_source_dir }}/{{ build_nettraxion_version }}\"\nnettraxion_zip_remote_src: false\nnettraxion_ear_remote_src: false" > $PWD/inventory/vagrant/group_vars/all/versions.yml
 check_command
 
-read -p "Please, make sure you connected to Dublin VPN via OpenVpn. If you do not have access to it, p$NVERSION ulease contact the sysadmin team.IF you are connected please press any key to resume"
+read -p "Please, make sure you connected to Dublin VPN via OpenVpn. If you do not have access to it, please contact the sysadmin team.IF you are connected please press any key to resume"
 
 echo "Starting site.yml"
 ansible-playbook site.yml
 
-echo "Adding HM hosts on  /etc/hosts"
-sudo -- sh -c 'grep vagrant.wntps.com /etc/hosts > /dev/null 2>1 ; if [ $? -eq 1 ]; then printf "\n# IP address of WEB server VM\n192.168.56.3 vagrant.wntps.com\n192.168.56.3 lcashflows.wntps.com\n192.168.56.3 lpayius.wntps.com\n192.168.56.3 lpayjack.wntps.com\n192.168.56.3 lpago.wntps.com\n192.168.56.3 lpivotal.wntps.com\n192.168.56.3 lanywherecom.wntps.com\n192.168.56.3 lctpayment.wntps.com\n192.168.56.3 lpayconex.wntps:w.com\n192.168.56.3 lpayzone.wntps.com\n192.168.56.3 lgoepay.wntps.com\n192.168.56.3 lfirstcitizens.wntps.com\n192.168.56.3 lgoldstarpayments.wntps.com\n192.168.56.3 payments-vantagegateway-com.wntps.com\n192.168.56.3 payments-gochipnow-com.wntps.com\n192.168.56.3 mobilepayments-jncb-com.wntps.com\n192.168.56.3 abacuspay-cmtgroup-com.wntps.com\n192.168.56.3 testpayments-itsco-net.wntps.com\n192.168.56.8 simulator.wntps.com\n192.168.56.8 sftp.wntps.com" >> /etc/hosts; fi'
-check_command
-
-echo "Remove $HOME/.ssh/conf"
-rm  $HOME/.ssh/conf
+echo "Remove $HOME/.ssh/config"
+rm  $HOME/.ssh/config
 check_command
