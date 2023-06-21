@@ -42,29 +42,40 @@ if (!([System.IO.File]::Exists($OpenVpnConfig )))
     echo "Downloading OpenVPN Config"
     Invoke-WebRequest -Uri $URL -OutFile $OpenVpnConfig
 
-
-    echo "Importing OpenVPN Config"
-    & C:\"Program Files"\"OpenVpn Connect"\OpenVPNConnect.exe  --accept-gdpr --skip-startup-dialogs --import-profile=$OpenVpnConfig
 }
+
+$PathOpenVpn = "C:\Program Files\OpenVpn Connect\OpenVPNConnect.exe"
+if ([System.IO.File]::Exists($PathOpenVpn ))
+{
+    echo "Importing OpenVPN Config"
+    &  $PathOpenVpn --accept-gdpr --skip-startup-dialogs --import-profile=$OpenVpnConfig
+}
+
+echo "Checking if Microsoft-Windows-Subsystem-Linux feature is enabled"
 
 if(!((Get-WindowsOptionalFeature -FeatureName Microsoft-Windows-Subsystem-Linux -Online).State -eq "Enabled"))
 {
     echo "Enabling WSL"
-    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-    Restart-Computer
+    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all 
 }
-if (!((Get-CimInstance win32_processor).VirtualizationFirmwareEnabled))
+
+echo "Checking if VirtualMachinePlatform feature is enabled"
+
+if (!((Get-WindowsOptionalFeature -FeatureName VirtualMachinePlatform  -Online).State -eq "Enabled"))
 {
     echo "Enable Virtual Machine feature"
-    dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
-    Restart-Computer
+    dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all  
 }
-if ($hyperv.State -eq "Enabled")
+
+echo "Checking if Microsoft-Hyper-V feature is enabled"
+
+if (!((Get-WindowsOptionalFeature -FeatureName Microsoft-Hyper-V  -Online).State -eq "Enabled"))
 {
     echo "Deactivating hyper-V"
-    bcdedit /set hypervisorlaunchtype off
-    Restart-Computer
+    dism.exe /online /disable-feature /featurename:Microsoft-Hyper-V 
+ 
 }
+
 
 echo "WSL updating"
 wsl --update
