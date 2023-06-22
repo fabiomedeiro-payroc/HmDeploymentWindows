@@ -5,7 +5,7 @@ $URL = "https://download.virtualbox.org/virtualbox/6.1.44/VirtualBox-6.1.44-1568
 $HomeVirtualboxExecutable = "$HOME\Downloads\VirtualBox-6.1.44-156814-Win.exe"
 $HomeVirtualbox = "C:\Program Files\Oracle\VirtualBox"
 $HomeOpenVpnExecutable = "$HOME\Downloads\openvpn-connect-3.3.7.2979_signed.msi"
-$HomeOpenVpn = "C:\Program Files\OpenVpn Connect"
+$HomeOpenVpn = "C:\Program Files\OpenVpn Connect\OpenVPNConnect.exe"
 $OpenVpnConfig = "$HOME\Downloads\DublinOpenVpn.ovpn"
 
 if (!([System.IO.File]::Exists($HomeVirtualboxExecutable )))
@@ -33,7 +33,12 @@ if (!(Test-Path -Path $HomeOpenVpn))
 {
     echo "Installing OpenVPN"
     msiexec.exe /i $HomeOpenVpnExecutable /quiet
+	Start-Sleep -Seconds 10
+	
+	echo "Importing OpenVPN Config"
+	& C:\"Program Files"\"OpenVpn Connect"\OpenVPNConnect.exe --accept-gdpr --skip-startup-dialogs --import-profile=$OpenVpnConfig
 }
+
 
 $URL = "https://raw.githubusercontent.com/fabioamedeiro/HmDeploymentWindows/main/Dublin_OpenVPN.ovpn"
 
@@ -44,16 +49,12 @@ if (!([System.IO.File]::Exists($OpenVpnConfig )))
 
 }
 
-$PathOpenVpn = "C:\Program Files\OpenVpn Connect\OpenVPNConnect.exe"
-if ([System.IO.File]::Exists($PathOpenVpn ))
-{
-    echo "Importing OpenVPN Config"
-    &  $PathOpenVpn --accept-gdpr --skip-startup-dialogs --import-profile=$OpenVpnConfig
-}
+echo "Preparing windows to enable some feature"
+C:\Windows\System32\OptionalFeatures.exe
 
 echo "Checking if Microsoft-Windows-Subsystem-Linux feature is enabled"
 
-if(!((Get-WindowsOptionalFeature -FeatureName Microsoft-Windows-Subsystem-Linux -Online).State -eq "Enabled"))
+if((Get-WindowsOptionalFeature -FeatureName Microsoft-Windows-Subsystem-Linux -Online).State -eq "Disabled")
 {
     echo "Enabling WSL"
     dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all 
@@ -61,7 +62,7 @@ if(!((Get-WindowsOptionalFeature -FeatureName Microsoft-Windows-Subsystem-Linux 
 
 echo "Checking if VirtualMachinePlatform feature is enabled"
 
-if (!((Get-WindowsOptionalFeature -FeatureName VirtualMachinePlatform  -Online).State -eq "Enabled"))
+if ((Get-WindowsOptionalFeature -FeatureName VirtualMachinePlatform  -Online).State -eq "Disabled")
 {
     echo "Enable Virtual Machine feature"
     dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all  
@@ -69,12 +70,13 @@ if (!((Get-WindowsOptionalFeature -FeatureName VirtualMachinePlatform  -Online).
 
 echo "Checking if Microsoft-Hyper-V feature is enabled"
 
-if (!((Get-WindowsOptionalFeature -FeatureName Microsoft-Hyper-V  -Online).State -eq "Enabled"))
+if ((Get-WindowsOptionalFeature -FeatureName Microsoft-Hyper-V  -Online).State -eq "Enabled")
 {
     echo "Deactivating hyper-V"
     dism.exe /online /disable-feature /featurename:Microsoft-Hyper-V 
  
 }
+
 
 
 echo "WSL updating"
