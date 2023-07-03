@@ -7,6 +7,9 @@ $HomeVirtualbox = "C:\Program Files\Oracle\VirtualBox"
 $HomeOpenVpnExecutable = "$HOME\Downloads\openvpn-connect-3.3.7.2979_signed.msi"
 $HomeOpenVpn = "C:\Program Files\OpenVpn Connect\OpenVPNConnect.exe"
 $OpenVpnConfig = "$HOME\Downloads\DublinOpenVpn.ovpn"
+$HomeTortoiseSVNExecutable = "$HOME\Downloads\TortoiseSVN-1.14.5.29465-x64-svn-1.14.2.msi"
+
+
 
 if (!([System.IO.File]::Exists($HomeVirtualboxExecutable )))
 {
@@ -19,6 +22,16 @@ if (!(Test-Path -Path $HomeVirtualbox))
     echo "Installing Virtulbox 6.1.44"
     start-process ($HomeVirtualboxExecutable)  --silent
 }
+
+$URL = "https://raw.githubusercontent.com/fabioamedeiro/HmDeploymentWindows/main/Dublin_OpenVPN.ovpn"
+
+if (!([System.IO.File]::Exists($OpenVpnConfig )))
+{
+    echo "Downloading OpenVPN Config"
+    Invoke-WebRequest -Uri $URL -OutFile $OpenVpnConfig
+
+}
+
 
 $URL = "https://swupdate.openvpn.net/downloads/connect/openvpn-connect-3.3.7.2979_signed.msi"
 
@@ -39,14 +52,16 @@ if (!(Test-Path -Path $HomeOpenVpn))
 	& C:\"Program Files"\"OpenVpn Connect"\OpenVPNConnect.exe --accept-gdpr --skip-startup-dialogs --import-profile=$OpenVpnConfig
 }
 
+$URL = "https://free.nchc.org.tw/osdn//storage/g/t/to/tortoisesvn/1.14.5/Application/TortoiseSVN-1.14.5.29465-x64-svn-1.14.2.msi"
 
-$URL = "https://raw.githubusercontent.com/fabioamedeiro/HmDeploymentWindows/main/Dublin_OpenVPN.ovpn"
-
-if (!([System.IO.File]::Exists($OpenVpnConfig )))
+if (!([System.IO.File]::Exists($HomeTortoiseSVNExecutable )))
 {
-    echo "Downloading OpenVPN Config"
-    Invoke-WebRequest -Uri $URL -OutFile $OpenVpnConfig
+    echo "Downloading TortoiseSVN"
+    Invoke-WebRequest -Uri $URL -OutFile $HomeTortoiseSVNExecutable
 
+    echo "Installing TortoiseSVN"
+    msiexec.exe /i $HomeTortoiseSVNExecutable /quiet
+    Start-Sleep -Seconds 10
 }
 
 echo "Preparing windows to enable some feature"
