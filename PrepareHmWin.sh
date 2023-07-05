@@ -88,3 +88,7 @@ check_command
 echo "Installing WN CLI"
 npm install --global worldnet-cli
 check_command
+
+echo "Setting Google DNS to resolv.conf "
+sudo sh -c 'rm  /etc/resolv.conf; printf "nameserver 8.8.8.8" > /etc/resolv.conf'
+check_command
