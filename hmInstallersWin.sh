@@ -24,9 +24,6 @@ if_dir_exist()
   fi
 }
 
-echo "Setting Google DNS to resolv.conf "
-sudo sh -c 'printf "nameserver 8.8.8.8" > /etc/resolv.conf'
-check_command
 
 echo "Downloading the Git and SVN readOnly Key"
 wget https://github.com/fabioamedeiro/HmDeploymentWindows/raw/main/svn_readonly.zip -O $HOME/svn_readonly.zip  > /dev/null 2>&1
