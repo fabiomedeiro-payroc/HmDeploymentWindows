@@ -83,7 +83,7 @@ export PATH="$PATH:/mnt/c/Programs/Virtualbox"
 
 echo "Deploying vkapp1, vkpmm1, vkpcx101 and vkweb1"
 vagrant up >/dev/null 2>&1
-check_command
+
 
 echo "Setting right permission on vagrant vms private key"
 chmod 600 inventory/vagrant/insecure_private_key.pem
