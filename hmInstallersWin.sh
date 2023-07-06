@@ -81,6 +81,9 @@ echo "Making sure vagrant environment is loaded"
 export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
 export PATH="$PATH:/mnt/c/Programs/Virtualbox"
 
+echo "Downloading vagrant Ubuntun 18.04 box "
+vagrant box add bento/ubuntu-18.04  --box-version 202107.28.0
+
 echo "Deploying vkapp1, vkpmm1, vkpcx101 and vkweb1"
 vagrant up >/dev/null 2>&1
 
@@ -91,10 +94,6 @@ check_command
 
 echo "Creating inventory/vagrant/group_vars/all/ignore.yml with Maven test user"
 printf "build_maven_username: 'wntest'\nbuild_maven_password: 'worldPass1'" > inventory/vagrant/group_vars/all/ignore.yml
-check_command
-
-echo "Making sure acl, python3-pexpect and patch are installed"
-ansible 'all:!localhost' -m shell -b -a "apt-get update; apt-get install acl python3-pexpect patch"
 check_command
 
 echo "Ping all vms "
