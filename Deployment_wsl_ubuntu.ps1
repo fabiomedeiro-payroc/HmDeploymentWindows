@@ -1,8 +1,8 @@
 function ex{exit}
 New-Alias ^D ex
 
-$URL = "https://download.virtualbox.org/virtualbox/6.1.44/VirtualBox-6.1.44-156814-Win.exe"
-$HomeVirtualboxExecutable = "$HOME\Downloads\VirtualBox-6.1.44-156814-Win.exe"
+$URL = "https://download.virtualbox.org/virtualbox/7.0.10/VirtualBox-7.0.10-158379-Win.exe"
+$HomeVirtualboxExecutable = "$HOME\Downloads\VirtualBox-7.0.10-158379-Win.exe"
 $HomeVirtualbox = "C:\Program Files\Oracle\VirtualBox"
 $HomeOpenVpnExecutable = "$HOME\Downloads\openvpn-connect-3.3.7.2979_signed.msi"
 $HomeOpenVpn = "C:\Program Files\OpenVpn Connect\OpenVPNConnect.exe"
