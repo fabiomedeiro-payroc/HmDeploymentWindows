@@ -20,7 +20,8 @@ if (!([System.IO.File]::Exists($HomeVisualCExecutable )))
 if (!(Test-Path -Path HKLM:SOFTWARE\Microsoft\DevDiv\VC\Servicing\14.0\RuntimeMinimum))
 {
     echo "Downloading Visual C++"
-    start-process ($HomeVisualCExecutable)  --silent
+    $HomeVisualCExecutable /q /norestart
+    Start-Sleep -Seconds 10
 }
 
 $URL = "https://download.virtualbox.org/virtualbox/7.0.10/VirtualBox-7.0.10-158379-Win.exe"
