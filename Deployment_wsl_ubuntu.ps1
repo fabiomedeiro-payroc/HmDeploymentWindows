@@ -1,7 +1,6 @@
 function ex{exit}
 New-Alias ^D ex
 
-$URL = "https://download.virtualbox.org/virtualbox/7.0.10/VirtualBox-7.0.10-158379-Win.exe"
 $HomeVirtualboxExecutable = "$HOME\Downloads\VirtualBox-7.0.10-158379-Win.exe"
 $HomeVirtualbox = "C:\Program Files\Oracle\VirtualBox"
 $HomeOpenVpnExecutable = "$HOME\Downloads\openvpn-connect-3.3.7.2979_signed.msi"
@@ -9,8 +8,22 @@ $HomeOpenVpn = "C:\Program Files\OpenVpn Connect\OpenVPNConnect.exe"
 $OpenVpnConfig = "$HOME\Downloads\DublinOpenVpn.ovpn"
 $HomeTortoiseSVNExecutable = "$HOME\Downloads\TortoiseSVN-1.14.5.29465-x64-svn-1.14.2.msi"
 $HomePuttyExecutable = "$HOME\Downloads\putty-64bit-0.78-installer.msi"
+$HomeVisualCExecutable = "$HOME\Downloads\vc_redist.x64.exe"
 
+$URL = "https://aka.ms/vs/17/release/vc_redist.x64.exe"
+if (!([System.IO.File]::Exists($HomeVisualCExecutable )))
+{
+    echo "Downloading Visual C++"
+    Invoke-WebRequest -Uri $URL -OutFile $HomeVisualCExecutable
+}
 
+if (!(Test-Path -Path HKLM:SOFTWARE\Microsoft\DevDiv\VC\Servicing\14.0\RuntimeMinimum))
+{
+    echo "Downloading Visual C++"
+    start-process ($HomeVisualCExecutable)  --silent
+}
+
+$URL = "https://download.virtualbox.org/virtualbox/7.0.10/VirtualBox-7.0.10-158379-Win.exe"
 if (!([System.IO.File]::Exists($HomeVirtualboxExecutable )))
 {
     echo "Downloading VirtualBox 6.1.44"
