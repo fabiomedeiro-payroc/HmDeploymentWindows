@@ -50,7 +50,7 @@ sudo apt-get install python3.9 python3.9-distutils -y > /dev/null 2>&1
 check_command
 
 echo "Installing sshpass, git, subversion, vagrant  and virtualbox"
-sudo apt-get install sshpass git subversion vagrant vim   -y > /dev/null 2>&1
+sudo apt-get install sshpass git subversion vagrant vim  unzip -y > /dev/null 2>&1
 check_command
 
 echo "Installing pip"
