@@ -19,8 +19,8 @@ if (!([System.IO.File]::Exists($HomeVisualCExecutable )))
 
 if (!(Test-Path -Path HKLM:SOFTWARE\Microsoft\DevDiv\VC\Servicing\14.0\RuntimeMinimum))
 {
-    echo "Downloading Visual C++"
-    $HomeVisualCExecutable /q /norestart
+    echo "Installing Visual C++"
+    & $HomeVisualCExecutable /q /norestart
     Start-Sleep -Seconds 10
 }
 
