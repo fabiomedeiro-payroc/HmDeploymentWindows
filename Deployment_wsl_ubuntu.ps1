@@ -57,13 +57,13 @@ if (!(Test-Path -Path $HomeOpenVpn))
 $URL = "https://download.virtualbox.org/virtualbox/7.0.10/VirtualBox-7.0.10-158379-Win.exe"
 if (!([System.IO.File]::Exists($HomeVirtualboxExecutable )))
 {
-    echo "Downloading VirtualBox 6.1.44"
+    echo "Downloading VirtualBox  7.0.10"
     Invoke-WebRequest -Uri $URL -OutFile $HomeVirtualboxExecutable
 }
 
 if (!(Test-Path -Path $HomeVirtualbox))
 {
-    echo "Installing Virtulbox 6.1.44"
+    echo "Installing Virtulbox 7.0.10"
     start-process ($HomeVirtualboxExecutable)  --silent
 }
 
