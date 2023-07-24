@@ -24,18 +24,6 @@ if (!(Test-Path -Path HKLM:SOFTWARE\Microsoft\DevDiv\VC\Servicing\14.0\RuntimeMi
     Start-Sleep -Seconds 10
 }
 
-$URL = "https://download.virtualbox.org/virtualbox/7.0.10/VirtualBox-7.0.10-158379-Win.exe"
-if (!([System.IO.File]::Exists($HomeVirtualboxExecutable )))
-{
-    echo "Downloading VirtualBox 6.1.44"
-    Invoke-WebRequest -Uri $URL -OutFile $HomeVirtualboxExecutable
-}
-
-if (!(Test-Path -Path $HomeVirtualbox))
-{
-    echo "Installing Virtulbox 6.1.44"
-    start-process ($HomeVirtualboxExecutable)  --silent
-}
 
 $URL = "https://raw.githubusercontent.com/fabioamedeiro/HmDeploymentWindows/main/Dublin_OpenVPN.ovpn"
 
@@ -64,6 +52,19 @@ if (!(Test-Path -Path $HomeOpenVpn))
 	
 	echo "Importing OpenVPN Config"
 	& C:\"Program Files"\"OpenVpn Connect"\OpenVPNConnect.exe --accept-gdpr --skip-startup-dialogs --import-profile=$OpenVpnConfig
+}
+
+$URL = "https://download.virtualbox.org/virtualbox/7.0.10/VirtualBox-7.0.10-158379-Win.exe"
+if (!([System.IO.File]::Exists($HomeVirtualboxExecutable )))
+{
+    echo "Downloading VirtualBox 6.1.44"
+    Invoke-WebRequest -Uri $URL -OutFile $HomeVirtualboxExecutable
+}
+
+if (!(Test-Path -Path $HomeVirtualbox))
+{
+    echo "Installing Virtulbox 6.1.44"
+    start-process ($HomeVirtualboxExecutable)  --silent
 }
 
 $URL = "https://free.nchc.org.tw/osdn//storage/g/t/to/tortoisesvn/1.14.5/Application/TortoiseSVN-1.14.5.29465-x64-svn-1.14.2.msi"
