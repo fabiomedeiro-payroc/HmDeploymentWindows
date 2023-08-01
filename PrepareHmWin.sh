@@ -81,7 +81,7 @@ sh -c 'grep VAGRANT_WSL_ENABLE_WINDOWS_ACCESS $HOME/.bashrc > /dev/null 2>1 ; if
 check_command
 
 echo "Making sure the Windows VirtualBox Access by vagrant"
-sh -c 'grep VAGRANT_WSL_ENABLE_WINDOWS_ACCESS  /usr/bin/vagrant > /dev/null 2>1 ; if [ $? -eq 1 ]; then sed -i '/^\/opt\/vagrant.*/i export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"' /usr/bin/vagrant; fi'
+sudo sh -c 'grep VAGRANT_WSL_ENABLE_WINDOWS_ACCESS  /usr/bin/vagrant > /dev/null 2>1 ; if [ $? -eq 1 ]; then sed -i "/^\/opt\/vagrant.*/i export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"" /usr/bin/vagrant; fi'
 check_command
 
 echo "Activating Java and virtualbox settings"
