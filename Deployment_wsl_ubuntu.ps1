@@ -67,7 +67,7 @@ if (!(Test-Path -Path $HomeVirtualbox))
     start-process ($HomeVirtualboxExecutable)  --silent
 }
 
-$URL = "https://free.nchc.org.tw/osdn//storage/g/t/to/tortoisesvn/1.14.5/Application/TortoiseSVN-1.14.5.29465-x64-svn-1.14.2.msi"
+$URL = "https://cfhcable.dl.sourceforge.net/project/tortoisesvn/1.14.5/Application/TortoiseSVN-1.14.5.29465-x64-svn-1.14.2.msi"
 
 if (!([System.IO.File]::Exists($HomeTortoiseSVNExecutable )))
 {
