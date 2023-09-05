@@ -6,7 +6,6 @@ $HomeVirtualbox = "C:\Program Files\Oracle\VirtualBox"
 $HomeOpenVpnExecutable = "$HOME\Downloads\openvpn-connect-3.3.7.2979_signed.msi"
 $HomeOpenVpn = "C:\Program Files\OpenVpn Connect\OpenVPNConnect.exe"
 $OpenVpnConfig = "$HOME\Downloads\DublinOpenVpn.ovpn"
-$HomeTortoiseSVNExecutable = "$HOME\Downloads\TortoiseSVN-1.14.5.29465-x64-svn-1.14.2.msi"
 $HomePuttyExecutable = "$HOME\Downloads\putty-64bit-0.78-installer.msi"
 $HomeVisualCExecutable = "$HOME\Downloads\vc_redist.x64.exe"
 
@@ -67,29 +66,6 @@ if (!(Test-Path -Path $HomeVirtualbox))
     start-process ($HomeVirtualboxExecutable)  --silent
 }
 
-$URL = "https://cfhcable.dl.sourceforge.net/project/tortoisesvn/1.14.5/Application/TortoiseSVN-1.14.5.29465-x64-svn-1.14.2.msi"
-
-if (!([System.IO.File]::Exists($HomeTortoiseSVNExecutable )))
-{
-    echo "Downloading TortoiseSVN"
-    Invoke-WebRequest -Uri $URL -OutFile $HomeTortoiseSVNExecutable
-
-    echo "Installing TortoiseSVN"
-    msiexec.exe /i $HomeTortoiseSVNExecutable /quiet
-}
-
-$URL = "https://the.earth.li/~sgtatham/putty/latest/w64/putty-64bit-0.78-installer.msi"
-
-if (!([System.IO.File]::Exists($HomePuttyExecutable )))
-{
-    echo "Downloading TortoiseSVN"
-    Invoke-WebRequest -Uri $URL -OutFile $HomePuttyExecutable
-
-    echo "Installing TortoiseSVN"
-    msiexec.exe /i $HomePuttyExecutable /quiet
-    Start-Sleep -Seconds 10
-}
-
 echo "Preparing windows to enable some feature"
 C:\Windows\System32\OptionalFeatures.exe
 
@@ -124,7 +100,7 @@ echo "WSL updating"
 wsl --update
 
 echo "Set WSL 1 as your default version"
-wsl --set-default-version 1
+wsl --set-default-version 2
 
 echo "Install WSL command"
 
