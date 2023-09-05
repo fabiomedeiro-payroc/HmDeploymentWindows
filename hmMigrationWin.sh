@@ -78,12 +78,12 @@ then
    vagrant box add bento/ubuntu-18.04  --box-version 202107.28.0
 fi
 
-grep "disabled:true" Vagrantfile> /dev/null 2>&1
-if [ $? -eq 1 ]
-then
-  echo "Disabling the vagrant host-management mount "
-   sed -i '/machine_config.vm.synced_folder/s/$/, disabled:true/' Vagrantfile
-fi
+#grep "disabled:true" Vagrantfile> /dev/null 2>&1
+#if [ $? -eq 1 ]
+#then
+#  echo "Disabling the vagrant host-management mount "
+#   sed -i '/machine_config.vm.synced_folder/s/$/, disabled:true/' Vagrantfile
+#fi
 
 echo "Deploying vkapp1, vkpmm1, vkpcx101 and vkweb1"
 vagrant up >/dev/null 2>&1
