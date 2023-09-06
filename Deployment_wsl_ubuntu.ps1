@@ -94,7 +94,9 @@ if ((Get-WindowsOptionalFeature -FeatureName Microsoft-Hyper-V  -Online).State -
  
 }
 
+echo "Deploying the Windows terminal"
 
+ winget install -e -h --id=9N0DX20HK701 --source=msstore
 
 echo "WSL updating"
 wsl --update
