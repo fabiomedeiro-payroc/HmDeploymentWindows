@@ -44,6 +44,13 @@ echo "Setting Read Only private Key Permission"
 chmod 600 $HOME/svn_readonly
 check_command
 
+grep -ri ext4 /opt/vagrant/embedded/gems/gems/vagrant-2.3.7/lib/vagrant/util/platform.rb > /dev/null 2>&1
+if [ $? -eq 1 ]
+then
+   echo "Enabling ext4 for vagrant mount"
+   sudo sed -i 's/"9p"/"9p" || info[:type] == "ext4"/g' /opt/vagrant/embedded/gems/gems/vagrant-2.3.7/lib/vagrant/util/platform.rb
+fi
+
 echo "Creating Nettraxion Folder"
 if_dir_exist "payroc/workspace/nettraxion" "echo"
 
@@ -81,8 +88,26 @@ echo "Making sure vagrant environment is loaded"
 export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
 export PATH="$PATH:/mnt/c/Programs/Virtualbox"
 
-echo "Downloading vagrant Ubuntun 18.04 box "
-vagrant box add bento/ubuntu-18.04  --box-version 202107.28.0
+vagrant box list  | grep "bento/ubuntu-18.04" >/dev/null 2>&1
+if [ $? -eq 1 ]
+then
+   echo "Downloading vagrant Ubuntun 18.04 box "
+   vagrant box add bento/ubuntu-18.04  --box-version 202107.28.0
+fi
+
+vagrant plugin list  | grep "virtualbox_WSL2" >/dev/null 2>&1
+if [ $? -eq 1 ]
+then
+   echo "Downloading vagrant virtualbox_WSL2 plugin "
+   vagrant plugin install virtualbox_WSL2
+fi
+
+#grep "disabled:true" Vagrantfile> /dev/null 2>&1
+#if [ $? -eq 1 ]
+#then
+#  echo "Disabling the vagrant host-management mount "
+#   sed -i '/machine_config.vm.synced_folder/s/$/, disabled:true/' Vagrantfile
+#fi
 
 echo "Deploying vkapp1, vkpmm1, vkpcx101 and vkweb1"
 vagrant up >/dev/null 2>&1
