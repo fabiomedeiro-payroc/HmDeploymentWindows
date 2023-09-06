@@ -32,8 +32,6 @@ then
    sudo sed -i 's/"9p"/"9p" || info[:type] == "ext4"/g' /opt/vagrant/embedded/gems/gems/vagrant-2.3.7/lib/vagrant/util/platform.rb
 fi
 
-
-
 echo "Creating Nettraxion Folder"
 if_dir_exist "payroc/workspace/nettraxion" "echo"
 
@@ -76,6 +74,13 @@ if [ $? -eq 1 ]
 then
    echo "Downloading vagrant Ubuntun 18.04 box "
    vagrant box add bento/ubuntu-18.04  --box-version 202107.28.0
+fi
+
+vagrant plugin list  | grep "virtualbox_WSL2" >/dev/null 2>&1
+if [ $? -eq 1 ]
+then
+   echo "Downloading vagrant virtualbox_WSL2 plugin "
+   vagrant plugin install virtualbox_WSL2
 fi
 
 #grep "disabled:true" Vagrantfile> /dev/null 2>&1
