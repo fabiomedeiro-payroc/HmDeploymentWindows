@@ -121,6 +121,4 @@ read -p "Please, make sure you connected to Dublin VPN via OpenVpn. If you do no
 echo "Starting site.yml"
 ansible-playbook site.yml
 
-echo "Remove $HOME/.ssh/config"
-rm  $HOME/.ssh/config
-check_command
+
