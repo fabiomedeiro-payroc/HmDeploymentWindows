@@ -9,6 +9,20 @@ $OpenVpnConfig = "$HOME\Downloads\DublinOpenVpn.ovpn"
 $HomePuttyExecutable = "$HOME\Downloads\putty-64bit-0.78-installer.msi"
 $HomeVisualCExecutable = "$HOME\Downloads\vc_redist.x64.exe"
 
+$HomeTortoiseSVNExecutable = "$HOME\Downloads\TortoiseSVN-1.14.5.29465-x64-svn-1.14.2.msi"
+
+$URL = "https://cfhcable.dl.sourceforge.net/project/tortoisesvn/1.14.5/Application/TortoiseSVN-1.14.5.29465-x64-svn-1.14.2.msi"
+
+if (!([System.IO.File]::Exists($HomeTortoiseSVNExecutable )))
+{
+    echo "Downloading TortoiseSVN"
+    Invoke-WebRequest -Uri $URL -OutFile $HomeTortoiseSVNExecutable
+
+    echo "Installing TortoiseSVN"
+    msiexec.exe /i $HomeTortoiseSVNExecutable /quiet
+}
+
+
 $URL = "https://aka.ms/vs/17/release/vc_redist.x64.exe"
 if (!([System.IO.File]::Exists($HomeVisualCExecutable )))
 {
