@@ -19,7 +19,7 @@ if (!([System.IO.File]::Exists($HomeTortoiseSVNExecutable )))
     Invoke-WebRequest -Uri $URL -OutFile $HomeTortoiseSVNExecutable
 
     echo "Installing TortoiseSVN"
-    msiexec.exe /i $HomeTortoiseSVNExecutable /quiet
+    msiexec.exe /i $HomeTortoiseSVNExecutable /quiet ADDLOCAL="ALL"
 }
 
 
