@@ -115,7 +115,7 @@ echo "Deploying the Windows terminal"
 echo "WSL updating"
 wsl --update
 
-echo "Set WSL 1 as your default version"
+echo "Set WSL 2 as your default version"
 wsl --set-default-version 2
 
 echo "Install WSL command"
