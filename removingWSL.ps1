@@ -1,5 +1,7 @@
 if((Get-WindowsOptionalFeature -FeatureName Microsoft-Windows-Subsystem-Linux -Online).State -eq "Enabled")
 {
+   echo "Preparing windows to enable some feature"
+   C:\Windows\System32\OptionalFeatures.exe
     echo "removing the vm ubuntu 22.04"
     wsl --unregister Ubuntu-22.04
     echo "Removing Ubuntu 22.04"
