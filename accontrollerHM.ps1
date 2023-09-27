@@ -125,5 +125,5 @@ winget install --silent --accept-package-agreements --accept-source-agreements -
 
 echo "Deploying Git"
 
-winget install --id Git.Git -e --source winget
+winget install --id Git.Git -e --source=winget
 
