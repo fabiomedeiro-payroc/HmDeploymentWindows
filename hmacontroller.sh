@@ -24,13 +24,6 @@ if_dir_exist()
   fi
 }
 
-
-echo  "Cloning host-management"
-if_dir_exist "host-management" "git clone git.worldnettps.com:/var/git/host-management" > /dev/null 2>&1
-
-echo "Cloning service-simulator"
-if_dir_exist "host-management/sources/service-simulator" "svn co svn+ssh://soundwave.worldnettps.com/etc/subversion/service-simulator" > /dev/null 2>&1
-
 echo "Creating sources Dir to receive HM"
 if_dir_exist "host-management" "cd"
 
@@ -63,6 +56,9 @@ vagrant up >/dev/null 2>&1
 echo "Setting right permission on vagrant vms private key"
 chmod 600 inventory/vagrant/insecure_private_key.pem
 check_command
+
+echo "Setting the Server-simulator"
+sed -i 's/^servsim_sources_dir:.*/servsim_sources_dir: \"\/home\/vagrant\/simulator\/VERSION_3_0_2_0\"/' inventory/vagrant/group_vars/servsim/servsim.yml
 
 echo "Creating inventory/vagrant/group_vars/all/ignore.yml with Maven test user"
 printf "build_maven_username: 'wntest'\nbuild_maven_password: 'worldPass1'" > inventory/vagrant/group_vars/all/ignore.yml
