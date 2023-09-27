@@ -127,3 +127,7 @@ echo "Deploying Git"
 
 winget install --id Git.Git -e --source=winget
 
+echo "Deploying putty"
+
+winget install --id PuTTY.PuTTY -e --source=winget
+
