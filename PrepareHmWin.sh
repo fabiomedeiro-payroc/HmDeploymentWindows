@@ -106,5 +106,6 @@ check_command
 echo "Checking the version of vagrant"
 VAGRANT_VERSION=`vagrant --version | awk '{ print $2 }'`
 
-echo "Enabling EXTsudo sed -i 's/if info \&\& (info\[:type\] == "drvfs" || info\[:type\] == "9p")/if info \&\& (info\[:type\] == "drvfs" || info\[:type\] == "9p" || info\[:type\] == "ext4")/g'  /opt/vagrant/embedded/gems/gems/vagrant-$VAGRANT_VERSION/lib/vagrant/util/platform.rb4 support to vagrant"
+echo "Enabling EXT for support to vagrant"
+sudo sed -i 's/if info \&\& (info\[:type\] == "drvfs" || info\[:type\] == "9p")/if info \&\& (info\[:type\] == "drvfs" || info\[:type\] == "9p" || info\[:type\] == "ext4")/g'  /opt/vagrant/embedded/gems/gems/vagrant-$VAGRANT_VERSION/lib/vagrant/util/platform.rb
 
