@@ -104,22 +104,6 @@ echo "installing shx"
 npm i shx --dev
 check_command
 
-echo "Please, provide the git token to clone github:"
-read GitToken
-
-echo "cloning  WN CLI"
-#token can be found on PAM - https://pam.payroc.com/PassTrixMain.cc#/Search/searchtext=Git&criteria=Search
-git clone https://$GitToken@github.com/payroc/wnet-cli.git/
-check_command
-
-echo "Installing WN CLI"
-cd wnet-cli
-npm run build && npm run prepack && npm link
-check_command
-
-echo "config WN CLI"
-wn init
-check_command
 
 echo "Checking the version of vagrant"
 VAGRANT_VERSION=`vagrant --version | awk '{ print $2 }'`
