@@ -78,7 +78,7 @@ sudo sh -c 'rm  /etc/resolv.conf; printf "nameserver 8.8.8.8" > /etc/resolv.conf
 check_command
 
 echo "Setting JAVA "
-sh -c 'grep -ri JAVA_HOME $HOME/.bashrc > /dev/null 2>1 ; if [ $? -eq 1 ]; then printf "JAVA_HOME=$HOME/custom_java/jdk8\nJRE_HOME=$HOME/custom_java/jdk8/jre\nPATH=\"$HOME/custom_java/jdk8/bin:$PATH:/mnt/c/Program Files/Oracle/VirtualBox\"" >> $HOME/.bashrc; fi'
+sh -c 'grep -ri JAVA_HOME $HOME/.bashrc > /dev/null 2>1 ; if [ $? -eq 1 ]; then printf "JAVA_HOME=$HOME/custom_java/jdk17\nPATH=\"$HOME/custom_java/jdk17/bin:$PATH:/mnt/c/Program Files/Oracle/VirtualBox\"" >> $HOME/.bashrc; fi'
 check_command
 
 echo "Setting Windows VirtualBox Access"
