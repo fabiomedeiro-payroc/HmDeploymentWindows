@@ -39,7 +39,7 @@ if_dir_exist "payroc/workspace/host-management-binaries" "git clone git.worldnet
 
 echo " change to the branch r_10.2.0.0_hm_on_mac"
 cd payroc/workspace/host-management-binaries
-git checkout branch r_10.2.0.0_hm_on_mac
+git checkout r_10.2.0.0_hm_on_mac
 cd $HOME
 check_command
 
@@ -104,9 +104,25 @@ check_command
 
 read -p "Please, make sure you connected to Dublin VPN via OpenVpn. If you do not have access to it, please contact the sysadmin team.IF you are connected please press any key to resume"
 
+echo "Deploying Java"
+ansible-plybook playbooks/custom_java.yml
+
+echo "Setting Java version from Custom Java"
+echo "source $HOME/custom_java.sh" >> $HOME/.zprofile; source  $HOME/.zprofile
+
+echo "Deploying Maven"
+brew install maven
+
+echo "Downloading NVM"
+wget -P $HOME  https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh ; bash $HOME/install.sh; echo "source $HOME/.nvm/nvm.sh" >> $HOME/.zprofile; source  $HOME/.zprofile
+
+echo "Deploying Node"
+nvm install --lts
+softwareupdate --install-rosetta
+
 echo "Starting site.yml"
 ansible-playbook site.yml
 
+sudo  sh -c 'printf "\n# IP address of WEB server VM\n192.168.56.3 vagrant.wntps.com\n192.168.56.3 lcashflows.wntps.com\n192.168.56.3 lpayius.wntps.com\n192.168.56.3 lpayjack.wntps.com\n192.168.56.3 lpago.wntps.com\n192.168.56.3 lpivotal.wntps.com\n192.168.56.3 lanywherecom.wntps.com\n192.168.56.3 lctpayment.wntps.com\n192.168.56.3 lpayconex.wntps.com\n192.168.56.3 lpayzone.wntps.com\n192.168.56.3 lgoepay.wntps.com\n192.168.56.3 lfirstcitizens.wntps.com\n192.168.56.3 lgoldstarpayments.wntps.com\n192.168.56.3 payments-vantagegateway-com.wntps.com\n192.168.56.3 payments-gochipnow-com.wntps.com\n192.168.56.3 mobilepayments-jncb-com.wntps.com\n192.168.56.3 abacuspay-cmtgroup-com.wntps.com\n192.168.56.3 testpayments-itsco-net.wntps.com" >> /etc/hosts'
 echo "Remove $HOME/.ssh/config"
-rm  $HOME/.ssh/config
-check_command
+
