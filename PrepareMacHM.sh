@@ -26,20 +26,3 @@ brew install python@3.9
 
 #Deploying Ansible
 /opt/homebrew/bin/python3.9 -m pip install ansible==5.10.0
-
-#Setting Java version from Custom Java
-echo "source $HOME/custom_java.sh" >> $HOME/.zprofile; source  $HOME/.zprofile
-
-#Deploying Maven
-brew install maven
-
-#Downloading NVM
-wget -P $HOME  https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh ; bash $HOME/install.sh; echo "source $HOME/.nvm/nvm.sh" >> $HOME/.zprofile; source  $HOME/.zprofile
-
-#Deploying Node
-nvm install --lts
-
-softwareupdate --install-rosetta
-
-#Adding the hm entries on hosts file
-sudo  sh -c 'printf "\n# IP address of WEB server VM\n192.168.56.3 vagrant.wntps.com\n192.168.56.3 lcashflows.wntps.com\n192.168.56.3 lpayius.wntps.com\n192.168.56.3 lpayjack.wntps.com\n192.168.56.3 lpago.wntps.com\n192.168.56.3 lpivotal.wntps.com\n192.168.56.3 lanywherecom.wntps.com\n192.168.56.3 lctpayment.wntps.com\n192.168.56.3 lpayconex.wntps.com\n192.168.56.3 lpayzone.wntps.com\n192.168.56.3 lgoepay.wntps.com\n192.168.56.3 lfirstcitizens.wntps.com\n192.168.56.3 lgoldstarpayments.wntps.com\n192.168.56.3 payments-vantagegateway-com.wntps.com\n192.168.56.3 payments-gochipnow-com.wntps.com\n192.168.56.3 mobilepayments-jncb-com.wntps.com\n192.168.56.3 abacuspay-cmtgroup-com.wntps.com\n192.168.56.3 testpayments-itsco-net.wntps.com" >> /etc/hosts'
