@@ -53,7 +53,7 @@ echo "Creating sources Dir to receive HM"
 if_dir_exist "payroc/workspace/host-management" "cd"
 
 echo " change to the branch r_10.2.0.0_hm_on_mac"
-git checkout branch r_10.2.0.0_hm_on_mac
+git checkout r_10.2.0.0_hm_on_mac
 check_command
 
 echo "Deploying the virtualenv"
