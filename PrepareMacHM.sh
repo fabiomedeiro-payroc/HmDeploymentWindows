@@ -4,7 +4,7 @@
 #Adding brew to PATH
 echo >> /Users/$USER/.zprofile
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/$USER/.zprofile
-eeval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 #Deploying Virtualbox
 brew install virtualbox
