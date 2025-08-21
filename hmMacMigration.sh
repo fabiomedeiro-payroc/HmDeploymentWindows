@@ -75,6 +75,9 @@ echo "Deploying requirements.yml on Python Virtual Environment"
 ansible-galaxy install -r requirements.yml  >/dev/null 2>&1
 check_command
 
+echo "Deploying virtual plugin for vagrant"
+vagrant plugin install virtualbox >/dev/null 2>&
+check_command
 
 echo "Deploying vkapp1, vkpmm1, vkpcx101 and vkweb1"
 vagrant up >/dev/null 2>&1
