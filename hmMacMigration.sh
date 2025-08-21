@@ -76,7 +76,7 @@ ansible-galaxy install -r requirements.yml  >/dev/null 2>&1
 check_command
 
 echo "Deploying virtual plugin for vagrant"
-vagrant plugin install virtualbox >/dev/null 2>&
+vagrant plugin install virtualbox >/dev/null 2>&1
 check_command
 
 echo "Deploying vkapp1, vkpmm1, vkpcx101 and vkweb1"
