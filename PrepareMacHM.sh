@@ -18,8 +18,12 @@ brew install openvpn-connect
 #Deploying Slack
 brew install slack
 
-#Deploying git subversion vagrant 
-brew install git subversion vagrant wget
+#Deploying git subversion  
+brew install git subversion  wget
+
+#Deploying Vagrant
+brew tap hashicorp/tap
+brew install hashicorp/tap/hashicorp-vagrant
 
 #Deploying python3
 brew install python@3.9
