@@ -53,12 +53,6 @@ if_dir_exist "payroc/workspace/host-management" "git clone git.worldnettps.com:/
 echo "Cloning host-management-binaries"
 if_dir_exist "payroc/workspace/host-management-binaries" "git clone git.worldnettps.com:/var/git/host-management-binaries" > /dev/null 2>&1
 
-echo " change to the branch r_10.2.0.0_hm_on_mac"
-cd payroc/workspace/host-management-binaries
-git checkout branch r_10.2.0.0_hm_on_mac
-cd $HOME
-check_command
-
 echo "Cloning test-credentials"
 if_dir_exist "payroc/workspace/test-credentials" "git clone git.worldnettps.com:/var/git/test-credentials" > /dev/null 2>&1
 
@@ -67,10 +61,6 @@ if_dir_exist "payroc/workspace/host-management/sources/service-simulator" "svn c
 
 echo "Creating sources Dir to receive HM"
 if_dir_exist "payroc/workspace/host-management" "cd"
-
-echo " change to the branch r_10.2.0.0_hm_on_mac"
-git checkout branch r_10.2.0.0_hm_on_mac
-check_command
 
 echo "Deploying the virtualenv"
 /opt/homebrew/bin/python3.9 -m pip install virtualenv
