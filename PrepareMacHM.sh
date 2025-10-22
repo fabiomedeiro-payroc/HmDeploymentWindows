@@ -30,3 +30,6 @@ brew install python@3.9
 
 #Deploying Ansible
 /opt/homebrew/bin/python3.9 -m pip install ansible==5.10.0
+
+#Deploying Intellij
+brew install --cask intellij-idea
