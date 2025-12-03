@@ -62,6 +62,8 @@ if_dir_exist "payroc/workspace/host-management/sources/service-simulator" "svn c
 echo "Creating sources Dir to receive HM"
 if_dir_exist "payroc/workspace/host-management" "cd"
 
+git checkout  r.10.8.4.0.mac_hm_gp
+
 echo "Deploying the virtualenv"
 /opt/homebrew/bin/python3.9 -m pip install virtualenv
 check_command
