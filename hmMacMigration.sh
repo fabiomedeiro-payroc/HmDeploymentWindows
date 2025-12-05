@@ -46,6 +46,8 @@ if_dir_exist "payroc/workspace/host-management/sources/service-simulator" "svn c
 echo "Creating sources Dir to receive HM"
 if_dir_exist "payroc/workspace/host-management" "cd"
 
+git checkout  r.10.8.4.0.mac_hm_gp
+
 echo "Deploying the virtualenv"
 /opt/homebrew/bin/python3.9 -m pip install virtualenv
 check_command
@@ -117,6 +119,6 @@ echo "Starting site.yml"
 ansible-playbook site.yml
 
 echo "Adding the hm entries on hosts file"
-sudo  sh -c 'printf "\n# IP address of WEB server VM\n192.168.56.3 vagrant.wntps.com\n192.168.56.3 lcashflows.wntps.com\n192.168.56.3 lpayius.wntps.com\n192.168.56.3 lpayjack.wntps.com\n192.168.56.3 lpago.wntps.com\n192.168.56.3 lpivotal.wntps.com\n192.168.56.3 lanywherecom.wntps.com\n192.168.56.3 lctpayment.wntps.com\n192.168.56.3 lpayconex.wntps.com\n192.168.56.3 lpayzone.wntps.com\n192.168.56.3 lgoepay.wntps.com\n192.168.56.3 lfirstcitizens.wntps.com\n192.168.56.3 lgoldstarpayments.wntps.com\n192.168.56.3 payments-vantagegateway-com.wntps.com\n192.168.56.3 payments-gochipnow-com.wntps.com\n192.168.56.3 mobilepayments-jncb-com.wntps.com\n192.168.56.3 abacuspay-cmtgroup-com.wntps.com\n192.168.56.3 testpayments-itsco-net.wntps.com" >> /etc/hosts'
+sudo  sh -c 'printf "\n# IP address of WEB server VM\n127.0.0.1 vagrant.wntps.com\n127.0.0.1 lcashflows.wntps.com\n127.0.0.1 lpayius.wntps.com\n127.0.0.1 lpayjack.wntps.com\n127.0.0.1 lpago.wntps.com\n127.0.0.1 lpivotal.wntps.com\n127.0.0.1 lanywherecom.wntps.com\n127.0.0.1 lctpayment.wntps.com\n127.0.0.1 lpayconex.wntps.com\n127.0.0.1 lpayzone.wntps.com\n127.0.0.1 lgoepay.wntps.com\n127.0.0.1 lfirstcitizens.wntps.com\n127.0.0.1 lgoldstarpayments.wntps.com\n127.0.0.1 payments-vantagegateway-com.wntps.com\n127.0.0.1 payments-gochipnow-com.wntps.com\n127.0.0.1 mobilepayments-jncb-com.wntps.com\n127.0.0.1 abacuspay-cmtgroup-com.wntps.com\n127.0.0.1 testpayments-itsco-net.wntps.com" >> /etc/hosts'
 
 
