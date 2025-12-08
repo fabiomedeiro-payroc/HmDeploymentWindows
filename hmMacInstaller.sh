@@ -63,6 +63,8 @@ echo "Creating sources Dir to receive HM"
 if_dir_exist "payroc/workspace/host-management" "cd"
 
 git checkout  r.10.8.4.0.mac_hm_gp
+sed -e '/vagrant/ s/^#*/#/' -i ''  ansible.cfg   
+sed -e '/vagrant_mac/ s/^#//' -i '' ansible.cfg
 
 echo "Deploying the virtualenv"
 /opt/homebrew/bin/python3.9 -m pip install virtualenv
