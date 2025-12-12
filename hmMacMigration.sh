@@ -46,8 +46,6 @@ if_dir_exist "payroc/workspace/host-management/sources/service-simulator" "svn c
 echo "Creating sources Dir to receive HM"
 if_dir_exist "payroc/workspace/host-management" "cd"
 
-git checkout  r.10.8.4.0.mac_hm_gp
-
 sed -e '/vagrant/ s/^#*/#/' -i ''  ansible.cfg   
 sed -e '/vagrant_mac/ s/^#//' -i '' ansible.cfg
 
