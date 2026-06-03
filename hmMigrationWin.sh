@@ -69,13 +69,6 @@ echo "Making sure vagrant environment is loaded"
 export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
 export PATH="$PATH:/mnt/c/Programs/Virtualbox"
 
-vagrant box list  | grep "bento/ubuntu-18.04" >/dev/null 2>&1
-if [ $? -eq 1 ]
-then
-   echo "Downloading vagrant Ubuntun 18.04 box "
-   vagrant box add bento/ubuntu-18.04  --box-version 202107.28.0
-fi
-
 vagrant plugin list  | grep "virtualbox_WSL2" >/dev/null 2>&1
 if [ $? -eq 1 ]
 then
