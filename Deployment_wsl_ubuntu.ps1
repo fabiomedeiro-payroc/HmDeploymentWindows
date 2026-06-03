@@ -56,8 +56,6 @@ Write-Host "Updating WSL"
 wsl --update
 Write-Host "Setting WSL default version to 2"
 wsl --set-default-version 2
-Write-Host "Installing Ubuntu 22.04"
-wsl --install -d Ubuntu-22.04
 
 # --- WSL Network Config (.wslconfig) ---
 Write-Host "Configuring WSL network settings for VPN compatibility..."
@@ -82,5 +80,5 @@ if (-not (Test-Path $WSLConfig)) {
 }
 
 Write-Host "Restarting WSL to apply network config..."
-wsl --shutdown
-Write-Host "Done! Launch Ubuntu from the Start Menu or run: wsl"
+Write-Host "Installing Ubuntu 22.04"
+wsl --install -d Ubuntu-22.04
