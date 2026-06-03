@@ -4,6 +4,7 @@ $HomeVirtualboxExecutable = "$HOME\Downloads\VirtualBox-7.2.8-173730-Win.exe"
 $HomeVirtualbox            = "C:\Program Files\Oracle\VirtualBox"
 $HomePuttyExecutable       = "$HOME\Downloads\putty-64bit-0.78-installer.msi"
 $HomeVisualCExecutable     = "$HOME\Downloads\vc_redist.x64.exe"
+$WSLConfig                 = "$HOME\.wslconfig"
 
 # --- Visual C++ Redistributable ---
 $URL = "https://aka.ms/vs/17/release/vc_redist.x64.exe"
@@ -60,6 +61,36 @@ wsl --update
 
 Write-Host "Setting WSL default version to 2"
 wsl --set-default-version 2
+
+# --- WSL Network Config (.wslconfig) ---
+Write-Host "Configuring WSL network settings for VPN compatibility..."
+
+$wslConfigContent = @"
+[wsl2]
+networkingMode=mirrored
+dnsTunneling=true
+firewall=false
+"@
+
+if (-not (Test-Path $WSLConfig)) {
+    Write-Host "Creating $WSLConfig"
+    Set-Content -Path $WSLConfig -Value $wslConfigContent
+} else {
+    # Check if [wsl2] section already exists
+    $existingContent = Get-Content $WSLConfig -Raw
+    if ($existingContent -match "\[wsl2\]") {
+        Write-Host ".wslconfig already has a [wsl2] section — skipping to avoid duplicates."
+        Write-Host "Please manually verify these settings are present in $WSLConfig :"
+        Write-Host $wslConfigContent
+    } else {
+        Write-Host "Appending WSL2 network config to existing $WSLConfig"
+        Add-Content -Path $WSLConfig -Value "`n$wslConfigContent"
+    }
+}
+
+Write-Host "Restarting WSL to apply network config..."
+wsl --shutdown
+Write-Host "WSL network config applied. Done!"
 
 Write-Host "Installing Ubuntu 22.04"
 wsl --install -d Ubuntu-22.04
