@@ -32,7 +32,8 @@ if (-not (Test-Path $HomeVirtualbox)) {
 
 # --- Windows Optional Features ---
 Write-Host "Preparing windows to enable some feature"
-Start-Process "C:\Windows\System32\OptionalFeatures.exe"
+C:\Windows\System32\OptionalFeatures.exe
+
 Write-Host "Checking Windows features..."
 if ((Get-WindowsOptionalFeature -FeatureName Microsoft-Windows-Subsystem-Linux -Online).State -eq "Disabled") {
     Write-Host "Enabling WSL"
