@@ -1,27 +1,10 @@
 function ex{exit}
 New-Alias ^D ex
 
-$HomeVirtualboxExecutable = "$HOME\Downloads\VirtualBox-7.0.10-158379-Win.exe"
+$HomeVirtualboxExecutable = "$HOME\Downloads\VirtualBox-7.2.8-173730-Win.exe"
 $HomeVirtualbox = "C:\Program Files\Oracle\VirtualBox"
-$HomeOpenVpnExecutable = "$HOME\Downloads\openvpn-connect-3.3.7.2979_signed.msi"
-$HomeOpenVpn = "C:\Program Files\OpenVpn Connect\OpenVPNConnect.exe"
-$OpenVpnConfig = "$HOME\Downloads\DublinOpenVpn.ovpn"
 $HomePuttyExecutable = "$HOME\Downloads\putty-64bit-0.78-installer.msi"
 $HomeVisualCExecutable = "$HOME\Downloads\vc_redist.x64.exe"
-
-$HomeTortoiseSVNExecutable = "$HOME\Downloads\TortoiseSVN-1.14.5.29465-x64-svn-1.14.2.msi"
-
-$URL = "https://cfhcable.dl.sourceforge.net/project/tortoisesvn/1.14.5/Application/TortoiseSVN-1.14.5.29465-x64-svn-1.14.2.msi"
-
-if (!([System.IO.File]::Exists($HomeTortoiseSVNExecutable )))
-{
-    echo "Downloading TortoiseSVN"
-    Invoke-WebRequest -Uri $URL -OutFile $HomeTortoiseSVNExecutable
-
-    echo "Installing TortoiseSVN"
-    msiexec.exe /i $HomeTortoiseSVNExecutable /quiet ADDLOCAL="ALL"
-}
-
 
 $URL = "https://aka.ms/vs/17/release/vc_redist.x64.exe"
 if (!([System.IO.File]::Exists($HomeVisualCExecutable )))
@@ -38,45 +21,16 @@ if (!(Test-Path -Path HKLM:SOFTWARE\Microsoft\DevDiv\VC\Servicing\14.0\RuntimeMi
 }
 
 
-$URL = "https://raw.githubusercontent.com/fabioamedeiro/HmDeploymentWindows/main/Dublin_OpenVPN.ovpn"
-
-if (!([System.IO.File]::Exists($OpenVpnConfig )))
-{
-    echo "Downloading OpenVPN Config"
-    Invoke-WebRequest -Uri $URL -OutFile $OpenVpnConfig
-
-}
-
-
-$URL = "https://swupdate.openvpn.net/downloads/connect/openvpn-connect-3.3.7.2979_signed.msi"
-
-if (!([System.IO.File]::Exists($HomeOpenVpnExecutable )))
-{
-    echo "Downloading OpenVPN"
-    Invoke-WebRequest -Uri $URL -OutFile $HomeOpenVpnExecutable
-}
-
-
-if (!(Test-Path -Path $HomeOpenVpn))
-{
-    echo "Installing OpenVPN"
-    msiexec.exe /i $HomeOpenVpnExecutable /quiet
-	Start-Sleep -Seconds 10
-	
-	echo "Importing OpenVPN Config"
-	& C:\"Program Files"\"OpenVpn Connect"\OpenVPNConnect.exe --accept-gdpr --skip-startup-dialogs --import-profile=$OpenVpnConfig
-}
-
-$URL = "https://download.virtualbox.org/virtualbox/7.0.10/VirtualBox-7.0.10-158379-Win.exe"
+$URL = "https://download.virtualbox.org/virtualbox/7.2.8/VirtualBox-7.2.8-173730-Win.exe"
 if (!([System.IO.File]::Exists($HomeVirtualboxExecutable )))
 {
-    echo "Downloading VirtualBox  7.0.10"
+    echo "Downloading VirtualBox  7.2.8"
     Invoke-WebRequest -Uri $URL -OutFile $HomeVirtualboxExecutable
 }
 
 if (!(Test-Path -Path $HomeVirtualbox))
 {
-    echo "Installing Virtulbox 7.0.10"
+    echo "Installing Virtulbox 7.2.8"
     start-process ($HomeVirtualboxExecutable)  --silent
 }
 
