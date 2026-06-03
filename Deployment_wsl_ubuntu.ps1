@@ -72,12 +72,6 @@ if (-not (Test-Path $WSLConfig)) {
     Set-Content -Path $WSLConfig -Value $wslConfigContent
 } else {
     $existingContent = Get-Content $WSLConfig -Raw
-    if ($existingContent -match "\[wsl2\]") {
-        Write-Host ".wslconfig already has a [wsl2] section - skipping."
-        Write-Host "Please manually verify these settings in $WSLConfig"
-    } else {
-        Write-Host "Appending WSL2 network config to existing $WSLConfig"
-        Add-Content -Path $WSLConfig -Value "`n$wslConfigContent"
     }
 }
 
