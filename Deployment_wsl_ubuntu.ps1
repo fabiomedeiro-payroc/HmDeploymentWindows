@@ -1,12 +1,9 @@
-#Requires -RunAsAdministrator
-
 function ex { exit }
 
 $HomeVirtualboxExecutable = "$HOME\Downloads\VirtualBox-7.2.8-173730-Win.exe"
-$HomeVirtualbox           = "C:\Program Files\Oracle\VirtualBox"
-$HomePuttyExecutable      = "$HOME\Downloads\putty-64bit-0.78-installer.msi"
-$HomeVisualCExecutable    = "$HOME\Downloads\vc_redist.x64.exe"
-$WSLConfig             = "$HOME\.wslconfig"
+$HomeVirtualbox            = "C:\Program Files\Oracle\VirtualBox"
+$HomePuttyExecutable       = "$HOME\Downloads\putty-64bit-0.78-installer.msi"
+$HomeVisualCExecutable     = "$HOME\Downloads\vc_redist.x64.exe"
 
 # --- Visual C++ Redistributable ---
 $URL = "https://aka.ms/vs/17/release/vc_redist.x64.exe"
@@ -30,38 +27,39 @@ if (-not (Test-Path $HomeVirtualbox)) {
     Start-Process -FilePath $HomeVirtualboxExecutable -ArgumentList "--silent" -Wait
 }
 
-
 # --- Windows Optional Features ---
-Write-Host "Preparing windows to enable some feature"
+
+echo "Preparing windows to enable some feature"
 C:\Windows\System32\OptionalFeatures.exe
 
 Write-Host "Checking Windows features..."
+
 if ((Get-WindowsOptionalFeature -FeatureName Microsoft-Windows-Subsystem-Linux -Online).State -eq "Disabled") {
     Write-Host "Enabling WSL"
-    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all 
 }
+
 if ((Get-WindowsOptionalFeature -FeatureName VirtualMachinePlatform -Online).State -eq "Disabled") {
     Write-Host "Enabling Virtual Machine Platform"
-    dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+    dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all 
 }
+
 if ((Get-WindowsOptionalFeature -FeatureName Microsoft-Hyper-V -Online).State -eq "Disabled") {
     Write-Host "Enabling Hyper-V"
-    dism.exe /online /enable-feature /featurename:Microsoft-Hyper-V /all /norestart
+    dism.exe /online /enable-feature /featurename:Microsoft-Hyper-V /all 
 }
 
 # --- Windows Terminal ---
 Write-Host "Installing Windows Terminal"
-winget install --silent --accept-package-agreements --accept-source-agreements --id 9N0DX20HK701 --source msstore
+winget install --silent --accept-package-agreements --accept-source-agreements `
+    --id 9N0DX20HK701 --source msstore
 
 # --- WSL ---
 Write-Host "Updating WSL"
 wsl --update
+
 Write-Host "Setting WSL default version to 2"
 wsl --set-default-version 2
 
-
-
 Write-Host "Installing Ubuntu 22.04"
 wsl --install -d Ubuntu-22.04
-
-
