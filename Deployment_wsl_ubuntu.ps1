@@ -59,9 +59,9 @@ Write-Host "Installing Ubuntu 22.04"
 wsl --install -d Ubuntu-22.04
 
 # --- WSL Network Config (.wslconfig) ---
-Write-Host "Configuring WSL network settings for VPN compatibility..."
+Write-Host "Configuring WSL network settings for VPN compatibility"
 $wslConfigContent = @"
-\[wsl2\]
+[wsl2]
 networkingMode=mirrored
 dnsTunneling=true
 firewall=false
