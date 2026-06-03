@@ -1,77 +1,61 @@
-function ex{exit}
-New-Alias ^D ex
+function ex { exit }
 
 $HomeVirtualboxExecutable = "$HOME\Downloads\VirtualBox-7.2.8-173730-Win.exe"
-$HomeVirtualbox = "C:\Program Files\Oracle\VirtualBox"
-$HomePuttyExecutable = "$HOME\Downloads\putty-64bit-0.78-installer.msi"
-$HomeVisualCExecutable = "$HOME\Downloads\vc_redist.x64.exe"
+$HomeVirtualbox            = "C:\Program Files\Oracle\VirtualBox"
+$HomePuttyExecutable       = "$HOME\Downloads\putty-64bit-0.78-installer.msi"
+$HomeVisualCExecutable     = "$HOME\Downloads\vc_redist.x64.exe"
 
+# --- Visual C++ Redistributable ---
 $URL = "https://aka.ms/vs/17/release/vc_redist.x64.exe"
-if (!([System.IO.File]::Exists($HomeVisualCExecutable )))
-{
-    echo "Downloading Visual C++"
+if (-not [System.IO.File]::Exists($HomeVisualCExecutable)) {
+    Write-Host "Downloading Visual C++"
     Invoke-WebRequest -Uri $URL -OutFile $HomeVisualCExecutable
 }
-
-if (!(Test-Path -Path HKLM:SOFTWARE\Microsoft\DevDiv\VC\Servicing\14.0\RuntimeMinimum))
-{
-    echo "Installing Visual C++"
-    & $HomeVisualCExecutable /q /norestart
-    Start-Sleep -Seconds 10
+if (-not (Test-Path "HKLM:\SOFTWARE\Microsoft\DevDiv\VC\Servicing\14.0\RuntimeMinimum")) {
+    Write-Host "Installing Visual C++"
+    Start-Process -FilePath $HomeVisualCExecutable -ArgumentList "/q /norestart" -Wait
 }
 
-
+# --- VirtualBox ---
 $URL = "https://download.virtualbox.org/virtualbox/7.2.8/VirtualBox-7.2.8-173730-Win.exe"
-if (!([System.IO.File]::Exists($HomeVirtualboxExecutable )))
-{
-    echo "Downloading VirtualBox  7.2.8"
+if (-not [System.IO.File]::Exists($HomeVirtualboxExecutable)) {
+    Write-Host "Downloading VirtualBox 7.2.8"
     Invoke-WebRequest -Uri $URL -OutFile $HomeVirtualboxExecutable
 }
-
-if (!(Test-Path -Path $HomeVirtualbox))
-{
-    echo "Installing Virtulbox 7.2.8"
-    start-process ($HomeVirtualboxExecutable)  --silent
+if (-not (Test-Path $HomeVirtualbox)) {
+    Write-Host "Installing VirtualBox 7.2.8"
+    Start-Process -FilePath $HomeVirtualboxExecutable -ArgumentList "--silent" -Wait
 }
 
-echo "Preparing windows to enable some feature"
-C:\Windows\System32\OptionalFeatures.exe
+# --- Windows Optional Features ---
+Write-Host "Checking Windows features..."
 
-echo "Checking if Microsoft-Windows-Subsystem-Linux feature is enabled"
-
-if((Get-WindowsOptionalFeature -FeatureName Microsoft-Windows-Subsystem-Linux -Online).State -eq "Disabled")
-{
-    echo "Enabling WSL"
-    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all 
+if ((Get-WindowsOptionalFeature -FeatureName Microsoft-Windows-Subsystem-Linux -Online).State -eq "Disabled") {
+    Write-Host "Enabling WSL"
+    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 }
 
-echo "Checking if VirtualMachinePlatform feature is enabled"
-
-if ((Get-WindowsOptionalFeature -FeatureName VirtualMachinePlatform  -Online).State -eq "Disabled")
-{
-    echo "Enable Virtual Machine feature"
-    dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all  
+if ((Get-WindowsOptionalFeature -FeatureName VirtualMachinePlatform -Online).State -eq "Disabled") {
+    Write-Host "Enabling Virtual Machine Platform"
+    dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 }
 
-echo "Checking if Microsoft-Hyper-V feature is enabled"
-
-if ((Get-WindowsOptionalFeature -FeatureName Microsoft-Hyper-V  -Online).State -eq "Enabled")
-{
-    echo "Deactivating hyper-V"
-    dism.exe /online /disable-feature /featurename:Microsoft-Hyper-V 
- 
+if ((Get-WindowsOptionalFeature -FeatureName Microsoft-Hyper-V -Online).State -eq "Disabled") {
+    Write-Host "Enabling Hyper-V"
+    dism.exe /online /enable-feature /featurename:Microsoft-Hyper-V /all /norestart
 }
 
-echo "Deploying the Windows terminal"
+# --- Windows Terminal ---
+Write-Host "Installing Windows Terminal"
+winget install --silent --accept-package-agreements --accept-source-agreements `
+    --id 9N0DX20HK701 --source msstore
 
- winget install --silent --accept-package-agreements --accept-source-agreements --id=9N0DX20HK701 --source=msstore
-
-echo "WSL updating"
+# --- WSL ---
+Write-Host "Updating WSL"
 wsl --update
 
-echo "Set WSL 2 as your default version"
+Write-Host "Setting WSL default version to 2"
 wsl --set-default-version 2
 
-echo "Install WSL command"
-
+Write-Host "Installing Ubuntu 22.04"
 wsl --install -d Ubuntu-22.04
