@@ -84,4 +84,3 @@ if (-not (Test-Path $WSLConfig)) {
 # Shutdown WSL so .wslconfig takes effect on next launch
 Write-Host "Restarting WSL to apply network config..."
 wsl --shutdown
-Write-Host "Done! Launch Ubuntu from the Start Menu or run: wsl"
