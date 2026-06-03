@@ -82,5 +82,5 @@ if (-not (Test-Path $WSLConfig)) {
 }
 
 # Shutdown WSL so .wslconfig takes effect on next launch
-Write-Host "Restarting WSL to apply network config..."
+Write-Host "Restarting WSL to apply network config"
 wsl --shutdown
