@@ -6,7 +6,7 @@ $HomeVirtualboxExecutable = "$HOME\Downloads\VirtualBox-7.2.8-173730-Win.exe"
 $HomeVirtualbox           = "C:\Program Files\Oracle\VirtualBox"
 $HomePuttyExecutable      = "$HOME\Downloads\putty-64bit-0.78-installer.msi"
 $HomeVisualCExecutable    = "$HOME\Downloads\vc_redist.x64.exe"
-$WSLConfig                = "$HOME\.wslconfig"
+$WSLConfig             = "$HOME\.wslconfig"
 
 # --- Visual C++ Redistributable ---
 $URL = "https://aka.ms/vs/17/release/vc_redist.x64.exe"
@@ -32,7 +32,7 @@ if (-not (Test-Path $HomeVirtualbox)) {
 
 # --- Windows Optional Features ---
 Write-Host "Preparing windows to enable some feature"
-Start-Process C:\Windows\System32\OptionalFeatures.exe
+Start-Process "C:\Windows\System32\OptionalFeatures.exe"
 Write-Host "Checking Windows features..."
 if ((Get-WindowsOptionalFeature -FeatureName Microsoft-Windows-Subsystem-Linux -Online).State -eq "Disabled") {
     Write-Host "Enabling WSL"
