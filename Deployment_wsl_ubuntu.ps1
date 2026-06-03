@@ -28,21 +28,25 @@ if (-not (Test-Path $HomeVirtualbox)) {
 }
 
 # --- Windows Optional Features ---
+
+echo "Preparing windows to enable some feature"
+C:\Windows\System32\OptionalFeatures.exe
+
 Write-Host "Checking Windows features..."
 
 if ((Get-WindowsOptionalFeature -FeatureName Microsoft-Windows-Subsystem-Linux -Online).State -eq "Disabled") {
     Write-Host "Enabling WSL"
-    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all 
 }
 
 if ((Get-WindowsOptionalFeature -FeatureName VirtualMachinePlatform -Online).State -eq "Disabled") {
     Write-Host "Enabling Virtual Machine Platform"
-    dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+    dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all 
 }
 
 if ((Get-WindowsOptionalFeature -FeatureName Microsoft-Hyper-V -Online).State -eq "Disabled") {
     Write-Host "Enabling Hyper-V"
-    dism.exe /online /enable-feature /featurename:Microsoft-Hyper-V /all /norestart
+    dism.exe /online /enable-feature /featurename:Microsoft-Hyper-V /all 
 }
 
 # --- Windows Terminal ---
