@@ -29,7 +29,7 @@ if (-not (Test-Path $HomeVirtualbox)) {
 
 # --- Windows Optional Features ---
 
-echo "Preparing windows to enable some feature"
+Write-Host  "Preparing windows to enable some feature"
 C:\Windows\System32\OptionalFeatures.exe
 
 Write-Host "Checking Windows features..."
