@@ -30,6 +30,7 @@ if (-not (Test-Path $HomeVirtualbox)) {
     Start-Process -FilePath $HomeVirtualboxExecutable -ArgumentList "--silent" -Wait
 }
 
+
 # --- Windows Optional Features ---
 Write-Host "Preparing windows to enable some feature"
 C:\Windows\System32\OptionalFeatures.exe
