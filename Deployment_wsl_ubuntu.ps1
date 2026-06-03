@@ -1,3 +1,5 @@
+#Requires -RunAsAdministrator
+
 function ex { exit }
 
 $HomeVirtualboxExecutable = "$HOME\Downloads\VirtualBox-7.2.8-173730-Win.exe"
@@ -30,7 +32,7 @@ if (-not (Test-Path $HomeVirtualbox)) {
 
 # --- Windows Optional Features ---
 Write-Host "Preparing windows to enable some feature"
-Start-Process C:\Windows\System32\OptionalFeatures.exe   # non-blocking, opens GUI for user
+Start-Process C:\Windows\System32\OptionalFeatures.exe
 Write-Host "Checking Windows features..."
 if ((Get-WindowsOptionalFeature -FeatureName Microsoft-Windows-Subsystem-Linux -Online).State -eq "Disabled") {
     Write-Host "Enabling WSL"
@@ -47,8 +49,7 @@ if ((Get-WindowsOptionalFeature -FeatureName Microsoft-Hyper-V -Online).State -e
 
 # --- Windows Terminal ---
 Write-Host "Installing Windows Terminal"
-winget install --silent --accept-package-agreements --accept-source-agreements `
-    --id 9N0DX20HK701 --source msstore
+winget install --silent --accept-package-agreements --accept-source-agreements --id 9N0DX20HK701 --source msstore
 
 # --- WSL ---
 Write-Host "Updating WSL"
@@ -59,7 +60,7 @@ Write-Host "Installing Ubuntu 22.04"
 wsl --install -d Ubuntu-22.04
 
 # --- WSL Network Config (.wslconfig) ---
-Write-Host "Configuring WSL network settings for VPN compatibility"
+Write-Host "Configuring WSL network settings for VPN compatibility..."
 $wslConfigContent = @"
 [wsl2]
 networkingMode=mirrored
@@ -71,16 +72,15 @@ if (-not (Test-Path $WSLConfig)) {
     Set-Content -Path $WSLConfig -Value $wslConfigContent
 } else {
     $existingContent = Get-Content $WSLConfig -Raw
-    if ($existingContent -match "[wsl2]") {
-        Write-Host ".wslconfig already has a [wsl2] section — skipping."
-        Write-Host "Please manually verify these settings in $WSLConfig :"
-        Write-Host $wslConfigContent
+    if ($existingContent -match "\[wsl2\]") {
+        Write-Host ".wslconfig already has a [wsl2] section - skipping."
+        Write-Host "Please manually verify these settings in $WSLConfig"
     } else {
         Write-Host "Appending WSL2 network config to existing $WSLConfig"
         Add-Content -Path $WSLConfig -Value "`n$wslConfigContent"
     }
 }
 
-# Shutdown WSL so .wslconfig takes effect on next launch
-Write-Host "Restarting WSL to apply network config"
+Write-Host "Restarting WSL to apply network config..."
 wsl --shutdown
+Write-Host "Done! Launch Ubuntu from the Start Menu or run: wsl"
